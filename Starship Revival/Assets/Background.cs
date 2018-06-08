@@ -24,7 +24,7 @@ public class Background : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        nebulas();
+        StartCoroutine(nebulas());
         StartCoroutine(spawnstars());
     }
     public IEnumerator spawnstars()
@@ -65,11 +65,16 @@ public class Background : MonoBehaviour
             {
                 GameObject temp2 = Instantiate(nebulaprefab);
 
-                temp2.transform.SetParent(gameObject.transform);
+                temp2.transform.SetParent(nebulaparent.transform);
+                temp2.transform.localPosition = new Vector3(0, 0, 0);
                 Sprite temp = Sprite.Create(new Texture2D((int)temp2.GetComponent<Image>().GetPixelAdjustedRect().width, (int)temp2.GetComponent<Image>().GetPixelAdjustedRect().height), new Rect(0, 0, (int)temp2.GetComponent<Image>().GetPixelAdjustedRect().width, (int)temp2.GetComponent<Image>().GetPixelAdjustedRect().height), new Vector2(.5f, .5f));
                 Color[] pix = new Color[temp.texture.width * temp.texture.height];
 
                 float[,] noiseMap = Noise.GenerateNoiseMap(temp.texture.width, temp.texture.height, Random.seed, scale, octaves, persistance, lucanarity, offset);
+                Debug.Log(noiseMap[0, 0]);
+                Debug.Log(noiseMap[0, 3]);
+                Debug.Log(noiseMap[0, 2]);
+                Debug.Log(noiseMap[0, 1]);
                 int width = noiseMap.GetLength(0);
                 int height = noiseMap.GetLength(1);
 
@@ -85,9 +90,10 @@ public class Background : MonoBehaviour
                 }
                 nebulalist.Add(temp2);
                 temp.texture.SetPixels(colourMap);
+                temp.texture.Apply();
                 temp2.GetComponent<Image>().sprite = temp;
             }
-            yield return new WaitUntil(() => numofnebulas < nebulalist.Count);
+            yield return new WaitUntil(() => numofnebulas <= nebulalist.Count);
         }
 
     }

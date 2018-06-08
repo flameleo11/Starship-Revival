@@ -9,7 +9,7 @@ public class BackgroundNebula : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //StartCoroutine(nebula());
+        StartCoroutine(nebula());
     }
     public IEnumerator nebula()
     {
@@ -24,7 +24,7 @@ public class BackgroundNebula : MonoBehaviour
         yield return new WaitUntil(() => GetComponentInParent<Canvas>().pixelRect.yMin - 5 >= transform.position.y);
         //}
         //Debug.Log("ded");
-        GetComponentInParent<Background>().starlist.Remove(gameObject);
+        GetComponentInParent<Background>().nebulalist.Remove(gameObject);
         Destroy(gameObject);
     }
     // Update is called once per frame
