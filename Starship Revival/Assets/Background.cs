@@ -27,6 +27,7 @@ public class Background : MonoBehaviour
         StartCoroutine(nebulas());
         StartCoroutine(spawnstars());
     }
+    //rigidbody.AddForce((otherObject.transform.position - transform.position).normalized* forceAmount * Time.smoothDeltaTime)
     public IEnumerator spawnstars()
     {
         for (int i = 0; i < startingstars; i++)
